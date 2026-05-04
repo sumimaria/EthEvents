@@ -78,6 +78,7 @@ const issueCertificate = async () => {
         from: accounts[0],
         to: contract,
         data: data,
+        gas: "0x493E0", 
       },
     ],
   });
