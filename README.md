@@ -38,7 +38,7 @@ PRIVATE_KEY=<your-ethereum-private-key>
 Deploy the contract
 
 ```bash
-npm run deploy:sepolia
+npm run deploy:hoodi
 ```
 
 Start the application
