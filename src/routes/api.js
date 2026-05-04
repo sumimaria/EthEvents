@@ -39,5 +39,34 @@ router.get("/abi", async function (req, res) {
     res.status(500).send("Internal Server Error");
   }
 });
+router.get("/events", async function (req, res) {
+  try {
+    const { JsonRpcProvider, Contract } = await import("ethers");
+    const { createRequire } = await import("module");
+    const require = createRequire(import.meta.url);
+    const details = require("../../artifacts/details.json");
+    const provider = new JsonRpcProvider(
+  `https://eth-hoodi.g.alchemy.com/v2/${process.env.API_KEY}`
+);
+   // const provider = new JsonRpcProvider("https://ethereum-hoodi-rpc.publicnode.com");
+    const readContract = new Contract(contract, abi, provider);
+
+    const filter = readContract.filters.Issued();
+    const logs = await readContract.queryFilter(filter, -1000);
+
+    const events = logs.map((log) => ({
+      course: log.args[0],
+      id: log.args[1].toString(),
+      grade: log.args[2],
+      txHash: log.transactionHash,
+      block: log.blockNumber,
+    }));
+
+    res.status(200).json(events);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 export default router;

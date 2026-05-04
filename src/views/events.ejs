@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+</head>
+
+<body>
+  <nav class="navbar is-link title is-4" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="/certificate.svg" />
+        <span class="ml-2">
+          <%= title %>
+        </span>
+      </a>
+    </div>
+    <div class="navbar-end navbar-item">
+      <a class="button is-light" href="/">← Back to Home</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="level mb-5">
+        <div class="level-left">
+          <div>
+            <h3 class="title is-3">📡 Certificate Issued Events</h3>
+            <p class="subtitle is-6 has-text-grey">
+              All <code>Issued</code> events emitted by the contract on Hoodi (last 1000 blocks)
+            </p>
+          </div>
+        </div>
+        <div class="level-right">
+          <button class="button is-link" onclick="location.reload()">
+            🔄 Refresh
+          </button>
+        </div>
+      </div>
+
+      <% if (events.length === 0) { %>
+        <div class="notification is-warning is-light">
+          <strong>No events found</strong> in the last 1000 blocks. Issue a certificate to see events here.
+        </div>
+      <% } else { %>
+
+        <div class="notification is-success is-light mb-4">
+          <strong><%= events.length %></strong> event(s) found on-chain.
+        </div>
+
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr class="has-background-link-light">
+                <th class="is-size-5">#</th>
+                <th class="is-size-5">Certificate ID</th>
+                <th class="is-size-5">Course</th>
+                <th class="is-size-5">Grade</th>
+                <th class="is-size-5">Block</th>
+                <th class="is-size-5">Transaction Hash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% events.forEach((e, index) => { %>
+                <tr>
+                  <td class="is-size-5"><%= index + 1 %></td>
+                  <td class="is-size-5">
+                    <span class="tag is-link is-medium">#<%= e.id %></span>
+                  </td>
+                  <td class="is-size-5"><%= e.course %></td>
+                  <td class="is-size-5">
+                    <span class="tag is-success is-medium"><%= e.grade %></span>
+                  </td>
+                  <td class="is-size-5"><%= e.block %></td>
+                  <td>
+                    <span class="is-family-monospace is-size-7 has-text-grey">
+                      <%= e.txHash %>
+                    </span>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+      <% } %>
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,13 +1,20 @@
 import "dotenv/config";
-import { Interface, WebSocketProvider, id } from "ethers";
-import details from "../artifacts/details.json" assert { type: "json" };
-import Cert from "../artifacts/contracts/Cert.sol/Cert.json" assert { type: "json" };
+import { Interface, JsonRpcProvider, WebSocketProvider, id } from "ethers";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const details = require("../artifacts/details.json");
+const Cert = require("../artifacts/contracts/Cert.sol/Cert.json");
 
 let provider;
 
 if (process.env.CHAIN === "sepolia") {
   provider = new WebSocketProvider(
     `wss://eth-sepolia.g.alchemy.com/v2/${process.env.API_KEY}`,
+  );
+} else if (process.env.CHAIN === "hoodi") {
+  provider = new WebSocketProvider(
+    `wss://eth-hoodi.g.alchemy.com/v2/${process.env.API_KEY}`,
   );
 } else {
   provider = new WebSocketProvider("ws://127.0.0.1:8545");

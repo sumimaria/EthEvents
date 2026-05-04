@@ -30,7 +30,7 @@ npm install
 Create a '.env' and add the following variables
 
 ```bash
-CHAIN=sepolia
+CHAIN=hoodi
 API_KEY=<your-alchemy-api-key>
 PRIVATE_KEY=<your-ethereum-private-key>
 ```

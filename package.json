@@ -11,7 +11,8 @@
     "node": "npx hardhat node",
     "test": "npx hardhat test",
     "deploy": "npx hardhat run scripts/deploy.js",
-    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia"
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "deploy:hoodi": "npx hardhat run scripts/deploy.js --network hoodi"
   },
   "dependencies": {
     "chalk": "^5.3.0",
