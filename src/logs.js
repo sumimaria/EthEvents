@@ -24,10 +24,11 @@ const eventTopic = id("Issued(string,uint256,string)");
 const courseTopic = id("Certified Ethereum Developer");
 
 let iface = new Interface(Cert.abi);
+const currentBlock = await provider.getBlockNumber();
 
 await provider
   .getLogs({
-    fromBlock: 0,
+    fromBlock: currentBlock-1,
     toBlock: "latest",
     address: details.contract,
     topics: [eventTopic, courseTopic],
